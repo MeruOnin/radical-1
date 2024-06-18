@@ -10,7 +10,7 @@ const validationSchema = Yup.object({
     .required("این فیلد اجباری است"),
 });
 
-const FormComponent = () => {
+const FormComponent = ({ btn }) => {
   return (
     <Formik
       initialValues={{
@@ -24,7 +24,7 @@ const FormComponent = () => {
       {() => (
         <Form className="w-full max-w-sm mx-auto mt-10">
           <Input title="کد ورود" name="entercode" type="number" />
-          <AnimatedBtn />
+          {btn}
         </Form>
       )}
     </Formik>

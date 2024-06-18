@@ -1,22 +1,21 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import Register from "./components/register/Register";
 import Start from "./components/start/Start";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import Header from "./components/header/Header";
 
 const App = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    // درخواست به API برای دریافت اطلاعات از دیتابیس
-    axios.get('http://localhost:5000/api/data') // آدرس API سرویس backend
-      .then(response => {
-        setData(response.data); // ذخیره داده‌های دریافتی در وضعیت
-      })
-      .catch(error => {
-        console.error('Error fetching data from API', error);
-      });
-  }, []);
-  return <Start />;
+  return (
+    <>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Start />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 };
 
 export default App;

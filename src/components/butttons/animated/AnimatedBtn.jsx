@@ -1,9 +1,9 @@
 import "./AnimatedBtn.css";
 
-const AnimatedBtn = () => {
+const AnimatedBtn = ({ title }) => {
   return (
-    <a href="#" class="btn-shine">
-      برای شروع کلیک کنید
+    <a href="#" className="btn-shine">
+      {title}
     </a>
   );
 };

@@ -1,11 +1,11 @@
-// input/Input.js
-import React, { useState } from 'react';
-import { useField } from "formik";
-import './Input.css';
+import React, { useState } from "react";
+import { useField, useFormikContext } from "formik";
+import "./Input.css";
 
 const Input = ({ title, type, ...props }) => {
   const [field, meta] = useField(props);
   const [isFocus, setIsFocus] = useState(false);
+  const { values } = useFormikContext();
 
   const inputId = `input-${title.replace(/\s+/g, "-").toLowerCase()}`;
 
@@ -17,6 +17,9 @@ const Input = ({ title, type, ...props }) => {
 
   const isLabelShrunk = isFocus || field.value;
 
+  // Access the value of the input field
+  console.log(`Value of ${title}:`, values[props.name]);
+
   return (
     <div className="mt-4 relative font-iranSansReg">
       <input
@@ -25,16 +28,18 @@ const Input = ({ title, type, ...props }) => {
         type={type}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className={`w-full p-2 text-background-white rounded-lg border-2 bg-transparent transition-all duration-200 outline-none ${isFocus ? "border-background-elm" : "border-background-elm2"}`}
+        className={`w-full p-2 text-background-white rounded-lg border-2 bg-transparent transition-all duration-200 outline-none ${
+          isFocus ? "border-background-elm" : "border-background-elm2"
+        }`}
         id={inputId}
       />
       <label
         htmlFor={inputId}
         className={`absolute font-iranSans right-2 transition-all duration-200 pointer-events-none ${
-          meta.touched && meta.error 
-          ? "-top-3 text-sm text-background-elm bg-background-org" 
-          : isLabelShrunk 
-            ? "-top-3 text-sm text-background-elm bg-background-org" 
+          meta.touched && meta.error
+            ? "-top-3 text-sm text-background-elm bg-background-org"
+            : isLabelShrunk
+            ? "-top-3 text-sm text-background-elm bg-background-org"
             : "top-3 text-background-elm2"
         }`}
       >

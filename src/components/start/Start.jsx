@@ -4,7 +4,7 @@ import Notifcation from "../notifcation/Notifcation";
 const Start = () => {
   return (
     <>
-      <Notifcation content={`متن نوتیفکیشن`} icon={`xmark`} iconColor={`red`}/>
+      <Notifcation content={`متن نوتیفکیشن`} icon={`xmark`} iconColor={`red`} />
       <div className="rounded-3xl p-4 max-w-60 w-fit flex flex-col justify-center items-center absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
         <header>
           <img

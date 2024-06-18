@@ -1,0 +1,14 @@
+.animation-notif {
+    animation: showNotif .5s ease forwards;
+}
+
+@keyframes showNotif {
+    from {
+        opacity: 0;
+        transform: translateY(-200%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

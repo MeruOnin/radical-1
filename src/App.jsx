@@ -5,6 +5,7 @@ import Start from "./components/start/Start";
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Db from "./components/database/db";
+import Services from "./components/services/Services";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path="/" element={<Start />} />
           <Route path="/register" element={<Register />} />
           <Route path="/db" element={<Db />} />
+          <Route path="/services" element={<Services />} />
         </Routes>
       </BrowserRouter>
     </>

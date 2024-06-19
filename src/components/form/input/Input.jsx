@@ -18,8 +18,6 @@ const Input = ({ title, type, ...props }) => {
   const isLabelShrunk = isFocus || field.value;
 
   // Access the value of the input field
-  console.log(values);
-
   return (
     <div className="mt-4 relative font-iranSansReg">
       <input

@@ -22,7 +22,7 @@ const FormComponent = ({ inputs, btn, onSubmit }) => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        onSubmit(values); // استفاده از تابع onSubmit
+        onSubmit(values);
       }}
     >
       {() => (
@@ -32,9 +32,7 @@ const FormComponent = ({ inputs, btn, onSubmit }) => {
               <Input title={input.title} name={input.name} type={input.type} />
             </div>
           ))}
-          <div className="mt-10">
-            <button type="submit">{btn.props.title}</button>
-          </div>
+          <div className="mt-10">{btn}</div>
         </Form>
       )}
     </Formik>

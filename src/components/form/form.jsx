@@ -2,8 +2,9 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Input from "./input/Input";
+import NormalBtn from "../butttons/Normal/NormalBtn";
 
-const FormComponent = ({ inputs, btn }) => {
+const FormComponent = ({ inputs, btn, onSubmit }) => {
   const validationSchema = Yup.object(
     inputs.reduce((acc, input) => {
       acc[input.name] = input.validationSchema;
@@ -21,7 +22,7 @@ const FormComponent = ({ inputs, btn }) => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        console.log(values);
+        onSubmit(values); // استفاده از تابع onSubmit
       }}
     >
       {() => (
@@ -31,7 +32,9 @@ const FormComponent = ({ inputs, btn }) => {
               <Input title={input.title} name={input.name} type={input.type} />
             </div>
           ))}
-          <div className="mt-10">{btn}</div>
+          <div className="mt-10">
+            <button type="submit">{btn.props.title}</button>
+          </div>
         </Form>
       )}
     </Formik>

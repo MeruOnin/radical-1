@@ -3,19 +3,33 @@ import AnimatedBtn from "../butttons/animated/AnimatedBtn";
 import FormComponent from "../form/form";
 import Notifcation from "../notifcation/Notifcation";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+import "./../butttons/Normal/NormalBtn.css";
+import NormalBtn from "../butttons/Normal/NormalBtn";
 
 const Start = () => {
+  const navigate = useNavigate(); // استفاده از useNavigate برای هدایت
+
   const componentInputs = [
     {
       title: "کد ورودی",
       name: "entercode",
       type: "number",
-      validationSchema: Yup.number()
-        .min(5, "لطفا کد پنج رقمی وارد کنید")
+      validationSchema: Yup.string()
+        .matches(/^\d{5}$/, "لطفا کد پنج رقمی وارد کنید")
         .required("این فیلد اجباری است"),
       initialValue: "",
     },
   ];
+
+  const handleSubmit = (values) => {
+    const { entercode } = values;
+    if (entercode.length !== 5) {
+      navigate("/register");
+    } else {
+      <Notifcation content={`لطفا کد را به درستی وارد کنید`} icon={`xmark`} />;
+    }
+  };
 
   return (
     <>
@@ -34,7 +48,8 @@ const Start = () => {
           </p>
           <FormComponent
             inputs={componentInputs}
-            btn={<NormalBtn title={`ورود به رادیکال`} path={`/register`} />}
+            btn={<NormalBtn title={`ورود به رادیکال`} />}
+            onSubmit={handleSubmit} // اضافه کردن این خط
           />
         </main>
       </div>

@@ -1,6 +1,8 @@
 import NormalBtn from "../butttons/Normal/NormalBtn";
 import FormComponent from "../form/form";
 import * as Yup from "yup";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./Register.css";
 
 const Register = () => {
@@ -43,6 +45,33 @@ const Register = () => {
     },
   ];
 
+  const navigate = useNavigate();
+
+  const handleSubmit = (values) => {
+    const { fullname, phonenumber, email, nationalcode } = values;
+
+    // ارسال درخواست به API Flask برای ذخیره اطلاعات کاربر
+    axios
+      .post("http://127.0.0.1:5000/api/register", {
+        fullname,
+        phonenumber,
+        email,
+        nationalcode,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          // اگر ثبت‌نام موفقیت‌آمیز بود، به صفحه مورد نظر هدایت شوید
+          navigate("/next-page");
+        } else {
+          // اگر ثبت‌نام ناموفق بود، پیغام خطا نمایش داده شود
+          console.error("Registration failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Error registering the user", error);
+      });
+  };
+
   return (
     <>
       <header className="m-4 flex items-center justify-end">
@@ -66,6 +95,7 @@ const Register = () => {
           <FormComponent
             inputs={componentInputs}
             btn={<NormalBtn title={`مرحله بعد`} />}
+            onSubmit={handleSubmit}
           />
         </main>
       </div>

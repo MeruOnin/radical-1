@@ -1,11 +1,11 @@
+import React from "react";
 import NormalBtn from "../butttons/Normal/NormalBtn";
-import AnimatedBtn from "../butttons/animated/AnimatedBtn";
 import FormComponent from "../form/form";
 import Notifcation from "../notifcation/Notifcation";
 import * as Yup from "yup";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./../butttons/Normal/NormalBtn.css";
-
 
 const Start = () => {
   const navigate = useNavigate(); // استفاده از useNavigate برای هدایت
@@ -24,11 +24,29 @@ const Start = () => {
 
   const handleSubmit = (values) => {
     const { entercode } = values;
-    if (entercode.length !== 5) {
-      navigate("/register");
-    } else {
-      <Notifcation content={`لطفا کد را به درستی وارد کنید`} icon={`xmark`} />;
-    }
+
+    const convertValue = JSON.stringify(values);
+    localStorage.setItem("entercode", convertValue);
+
+    // ارسال درخواست به API Flask برای بررسی کد
+    axios
+      .post("http://127.0.0.1:5000/api/check_code", { code: entercode })
+      .then((response) => {
+        if (response.data.exists) {
+          // اگر کد وجود دارد، به صفحه مورد نظر هدایت شوید
+          navigate("/register");
+        } else {
+          // اگر کد وجود ندارد، پیغام خطا نمایش داده شود
+          <Notifcation content={`کد وارد شده صحیح نیست`} icon={`xmark`} />;
+        }
+      })
+      .catch((error) => {
+        console.error("Error checking the code", error);
+        <Notifcation
+          content={`خطایی در ارتباط با سرور رخ داده است`}
+          icon={`xmark`}
+        />;
+      });
   };
 
   return (
@@ -44,12 +62,12 @@ const Start = () => {
         <main className="text-center">
           <h1 className="text-h1 font-iranSans text-background-elm">رادیکال</h1>
           <p className="text-background-white">
-            رادیکال ، سامانه ای برای انجام خدمات تکنولوژی
+            رادیکال، سامانه‌ای برای انجام خدمات تکنولوژی
           </p>
           <FormComponent
             inputs={componentInputs}
             btn={<NormalBtn title={`ورود به رادیکال`} />}
-            onSubmit={handleSubmit} // اضافه کردن این خط
+            onSubmit={handleSubmit}
           />
         </main>
       </div>

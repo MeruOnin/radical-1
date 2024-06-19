@@ -5,7 +5,7 @@ import Notifcation from "../notifcation/Notifcation";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import "./../butttons/Normal/NormalBtn.css";
-import NormalBtn from "../butttons/Normal/NormalBtn";
+
 
 const Start = () => {
   const navigate = useNavigate(); // استفاده از useNavigate برای هدایت

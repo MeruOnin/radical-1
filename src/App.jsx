@@ -6,6 +6,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Db from "./components/database/db";
 import Services from "./components/services/Services";
+import CompanyInfo from "./components/company/company";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/db" element={<Db />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/company" element={<CompanyInfo />} />
         </Routes>
       </BrowserRouter>
     </>

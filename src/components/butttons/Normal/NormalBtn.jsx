@@ -5,7 +5,7 @@ const NormalBtn = ({ title, path }) => {
   const navigate = useNavigate();
   return (
     <>
-      <button class="cssbuttons-io-button" onClick={() => navigate(path)}>
+      <button class="cssbuttons-io-button w-56" onClick={() => navigate(path)}>
         <div class="icon">
           <svg
             height="24"

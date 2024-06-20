@@ -2,7 +2,7 @@
     background: #DA0037;
     color: #EDEDED;
     font-family: inherit;
-    padding: 0.35em;
+    padding: 1em;
     padding-left: 3.3rem;
     font-size: 17px;
     font-weight: 500;
@@ -15,7 +15,6 @@
     position: relative;
     height: 2.8em;
     cursor: pointer;
- 
   }
   
   .cssbuttons-io-button .icon {

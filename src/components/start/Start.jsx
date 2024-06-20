@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./../butttons/Normal/NormalBtn.css";
+import Header from "../header/Header";
 
 const Start = () => {
   const navigate = useNavigate(); // استفاده از useNavigate برای هدایت
@@ -28,15 +29,12 @@ const Start = () => {
     const convertValue = JSON.stringify(values);
     localStorage.setItem("entercode", convertValue);
 
-    // ارسال درخواست به API Flask برای بررسی کد
     axios
       .post("http://127.0.0.1:5000/api/check_code", { code: entercode })
       .then((response) => {
         if (response.data.exists) {
-          // اگر کد وجود دارد، به صفحه مورد نظر هدایت شوید
           navigate("/register");
         } else {
-          // اگر کد وجود ندارد، پیغام خطا نمایش داده شود
           <Notifcation content={`کد وارد شده صحیح نیست`} icon={`xmark`} />;
         }
       })
@@ -52,24 +50,17 @@ const Start = () => {
   return (
     <>
       <div className="rounded-3xl p-4 max-w-60 w-fit flex flex-col justify-center items-center absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-        <header>
-          <img
-            src="src/assets/radical-logo-white.png"
-            className="w-32 h-32"
-            alt="radical logo"
-          />
-        </header>
-        <main className="text-center">
-          <h1 className="text-h1 font-iranSans text-background-elm">رادیکال</h1>
-          <p className="text-background-white">
-            رادیکال، سامانه‌ای برای انجام خدمات تکنولوژی
-          </p>
-          <FormComponent
-            inputs={componentInputs}
-            btn={<NormalBtn title={`ورود به رادیکال`} />}
-            onSubmit={handleSubmit}
-          />
-        </main>
+        <Header
+          title={`رادیکال`}
+          desc={`رادیکال، سامانه ای برای انجام خدمات تکنولوژی`}
+          content={
+            <FormComponent
+              inputs={componentInputs}
+              btn={<NormalBtn title={`ورود به رادیکال`} />}
+              onSubmit={handleSubmit}
+            />
+          }
+        />
       </div>
     </>
   );

@@ -1,16 +1,13 @@
 import "./Services.css";
 import { useEffect, useState } from "react";
+import NormalBtn from "../butttons/Normal/NormalBtn";
+import FormComponent from "../form/form";
+import Input from "../form/input/Input";
+import * as Yup from "yup";
 
 const Services = () => {
   const [selected, setSelected] = useState("services");
-
-  useEffect(() => {
-    if (selected === "services") {
-      // Do something if "services" is selected
-    } else {
-      console.log(false);
-    }
-  }, [selected]);
+  const [checkedServices, setCheckedServices] = useState([]);
 
   const ourServices = [
     {
@@ -31,34 +28,82 @@ const Services = () => {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
-  const Service = ({ title, price }) => {
+  const handleCheck = (id) => {
+    setCheckedServices((prevCheckedServices) =>
+      prevCheckedServices.includes(id)
+        ? prevCheckedServices.filter((serviceId) => serviceId !== id)
+        : [...prevCheckedServices, id]
+    );
+  };
+
+  const Service = ({ title, price, id }) => {
     return (
-      <li className="bg-blue-500 m-2">
-        <div>
-          <h5>{title}</h5>
-          <span>{formatPrice(price)} تومان</span>
+      <li
+        className={`bg-background-org text-background-white m-2 border-2 border-background-org hover:border-background-elm transition-all duration-200 flex justify-between w-80 p-2 rounded-xl items-center ${
+          checkedServices.includes(id) ? "bg-background-elm" : ""
+        }`}
+      >
+        <div className="">
+          <h4>{title}</h4>
+          <span className="text-sm">
+            {formatPrice(price)}
+            <span className="text-[8px]">تومان</span>
+          </span>
         </div>
-        <label className="container">
-          <input type="checkbox" />
-          <svg viewBox="0 0 64 64" height="2em" width="2em">
-            <path
-              d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
-              pathLength="575.0541381835938"
-              className="path"
-            ></path>
-          </svg>
-        </label>
+        <div className="checkbox-wrapper-46">
+          <input
+            type="checkbox"
+            checked={checkedServices.includes(id)}
+            onChange={() => handleCheck(id)}
+            id={`cbx-46-${id}`}
+            className="inp-cbx"
+          />
+          <label htmlFor={`cbx-46-${id}`} className="cbx">
+            <span>
+              <svg viewBox="0 0 12 10" height="10px" width="12px">
+                <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+              </svg>
+            </span>
+          </label>
+        </div>
       </li>
     );
   };
 
   const ServicesWrapper = () => {
     return (
-      <ul className="relative top-40 bg-red-600 w-fit right-[50%] pt-0.5 pb-0.5 translate-x-[50%]">
-        {ourServices.map((service, index) => (
-          <Service key={index} title={service.title} price={service.price} />
-        ))}
-      </ul>
+      <div>
+        <ul className="relative top-40 bg-background-elm2 w-fit rounded-3xl right-[50%] translate-x-[50%] pt-0.5 pb-0.5">
+          {ourServices.map((service, index) => (
+            <Service
+              key={index}
+              id={index}
+              title={service.title}
+              price={service.price}
+            />
+          ))}
+        </ul>
+        <div className="absolute flex-col bg-background-elm2  text-background-white p-6 rounded-2xl top-[27rem] flex justify-between w-80 items-center right-[50%] translate-x-[50%]">
+          <section className="flex justify-between items-center w-full">
+            <div className="flex">
+              <i className="fi fi-tr-binary-circle-check ml-2"></i>
+              <h5>کد ورود</h5>
+            </div>
+            <h5>45971</h5>
+          </section>
+          <span className="w-10 h-[.2rem] rounded-full bg-background-elm mt-5 mb-5" />
+          <section className="flex justify-between items-center w-full">
+            <div className="flex">
+              <i className="fi fi-tr-usd-circle ml-2"></i>
+              <h5>قیمت نهایی</h5>
+            </div>
+            <h5>700,000,000</h5>
+          </section>
+        </div>
+        <div className="absolute top-[37rem] right-[50%] translate-x-[50%]">
+          <NormalBtn title={`پرداخت`} path={`/`} />
+        </div>
+      </div>
     );
   };
 
@@ -107,11 +152,34 @@ const Services = () => {
     );
   };
 
+  const componentInputs = [
+    {
+      title: "کد تخفیف",
+      name: "discountcode",
+      type: "text",
+      validationSchema: Yup.string()
+        .matches(/^\d{5}$/, "لطفا کد پنج رقمی وارد کنید")
+        .required("این فیلد اجباری است"),
+      initialValue: "",
+    },
+  ];
+
+  const DiscountCode = () => {
+    return (
+      <div className="relative top-[10rem]">
+        <FormComponent
+          inputs={componentInputs}
+          btn={<NormalBtn title={`اعمال`} />}
+        />
+      </div>
+    );
+  };
+
   return (
     <>
       <Toggle />
-      {/* services section */}
       {selected === "services" && <ServicesWrapper />}
+      {selected === "offer" && <DiscountCode />}
     </>
   );
 };

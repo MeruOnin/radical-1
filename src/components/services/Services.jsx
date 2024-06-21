@@ -39,11 +39,15 @@ const Services = () => {
   const Service = ({ title, price, id }) => {
     return (
       <li
-        className={`bg-background-org text-background-white m-2 border-2 border-background-org hover:border-background-elm transition-all duration-200 flex justify-between w-80 p-2 rounded-xl items-center ${
-          checkedServices.includes(id) ? "bg-background-elm" : ""
-        }`}
+        className={`m-2 border-2 transition-all duration-200 flex justify-between w-80 p-2 rounded-xl items-center
+          ${
+            checkedServices.includes(id)
+              ? "bg-background-elm border-background-elm"
+              : "bg-background-org text-background-white border-background-org hover:border-background-elm"
+          }
+        `}
       >
-        <div className="">
+        <div>
           <h4>{title}</h4>
           <span className="text-sm">
             {formatPrice(price)}
